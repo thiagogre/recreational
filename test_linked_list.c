@@ -7,6 +7,22 @@
 
 #define NODES 10
 
+static int test_prepend(void) {
+    Node *node = NULL;
+
+    prepend(&node, 0);
+    ASSERT(node->data == 0);
+    ASSERT(node->next == NULL);
+    prepend(&node, 1);
+    ASSERT(node->data == 1);
+    ASSERT(node->next != NULL);
+    ASSERT(node->next->data == 0);
+
+    RELEASE(node);
+
+    return 0;
+}
+
 static int test_append_and_traverse(void) {
     Node *node = NULL;
     DynamicVec vec = create(sizeof(Data));
@@ -16,12 +32,12 @@ static int test_append_and_traverse(void) {
         vec.push(&vec, &data);
 
         if (i == 0) {
-            node = append(NULL, data);
+            append(&node, data);
             ASSERT(node != NULL);
             ASSERT(node->data == data);
             ASSERT(node->next == NULL);
         } else {
-            append(node, data);
+            append(&node, data);
         }
     }
 
@@ -47,9 +63,10 @@ static int test_append_and_traverse(void) {
 }
 
 static int test_remove_node(void) {
-    Node *node = append(NULL, 2);
-    append(node, 4);
-    append(node, 6);
+    Node *node = NULL;
+    append(&node, 2);
+    append(&node, 4);
+    append(&node, 6);
 
     ASSERT(removeNode(&node, 4) == 0); // remove middle
     ASSERT(removeNode(&node, 6) == 0); // remove last
@@ -62,8 +79,9 @@ static int test_remove_node(void) {
 }
 
 static test_case tests[] = {
-    {"Append and Traverse", test_append_and_traverse},
-    {"Remove Node", test_remove_node},
+    {.name = "Prepend", .func = test_prepend},
+    {.name = "Append and Traverse", .func = test_append_and_traverse},
+    {.name = "Remove Node", .func = test_remove_node},
 };
 
 int main(void) { return RUN_TESTS(tests); }

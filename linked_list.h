@@ -12,10 +12,12 @@ typedef struct Linked_List {
 } Linked_List;
 
 Node *init(Data data);
-Node *append(Node *node, Data data);
+void prepend(Node **node, Data data);
+void append(Node **node, Data data);
 int removeNode(Node **node, Data target);
 Linked_List *traverse(Node *node);
 
+#define LINKED_LIST_IMPLEMENTATION
 #ifdef LINKED_LIST_IMPLEMENTATION
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +26,7 @@ Linked_List *traverse(Node *node);
 inline Node *init(Data data) {
     Node *node = (Node *)malloc(sizeof(struct Node));
     if (node == NULL) {
+        printf("malloc error\n");
         exit(1);
     }
 
@@ -41,22 +44,17 @@ inline Node *init(Data data) {
         }                                                                      \
     } while (0)
 
-inline Node *append(Node *node, Data data) {
-    if (node == NULL) {
-        node = init(data);
-        return node;
-    }
+inline void prepend(Node **node, Data data) {
+    Node *newNode = init(data);
+    newNode->next = *node;
+    *node = newNode;
+}
 
-    Node *currentNode = node;
-    if (currentNode->next != NULL) {
-        return append(currentNode->next, data);
+inline void append(Node **node, Data data) {
+    while (*node != NULL) {
+        node = &(*node)->next;
     }
-
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->next = NULL;
-    newNode->data = data;
-    currentNode->next = newNode;
-    return currentNode;
+    *node = init(data);
 }
 
 inline int removeNode(Node **head, Data target) {
