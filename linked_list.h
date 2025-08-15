@@ -17,7 +17,6 @@ void append(Node **node, Data data);
 int removeNode(Node **node, Data target);
 Linked_List *traverse(Node *node);
 
-#define LINKED_LIST_IMPLEMENTATION
 #ifdef LINKED_LIST_IMPLEMENTATION
 #include <stdio.h>
 #include <stdlib.h>
