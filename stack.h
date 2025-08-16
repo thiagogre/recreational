@@ -11,7 +11,6 @@ void initStack(StackLIFO **stack, Data data);
 void push(StackLIFO *stack, Data data);
 int pop(StackLIFO *stack, Data *popped);
 
-#define STACK_IMPLEMENTATION
 #ifdef STACK_IMPLEMENTATION
 
 inline void initStack(StackLIFO **stack, Data data) {
