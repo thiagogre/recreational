@@ -4,7 +4,7 @@
 #include "stack.h"
 
 static int test_push_pop(void) {
-    Stack *stack = NULL;
+    StackLIFO *stack = NULL;
     initStack(&stack, 0);
     ASSERT(stack->head->data == 0);
     ASSERT(stack->head->next == NULL);
