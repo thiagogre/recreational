@@ -14,7 +14,6 @@ void initQueue(QueueFIFO **queue, Data data);
 void enqueue(QueueFIFO *queue, Data data);
 int dequeue(QueueFIFO *queue, Data *out);
 
-#define QUEUE_IMPLEMENTATION
 #ifdef QUEUE_IMPLEMENTATION
 
 inline void initQueue(QueueFIFO **queue, Data data) {
